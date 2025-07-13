@@ -33,14 +33,22 @@ session_start();
                 </label>
                 <input type="text" name="name" id="name" class="form-control" placeholder="Enter your username" required>
             </div>
-            <div class="form-group">
+            <div class="form-group position-relative">
                 <label for="password" class="form-label">
-                <i class="bi bi-lock-fill"></i> Password
+                    <i class="bi bi-lock-fill"></i> Password
                 </label>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                <div class="input-group">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <span class="input-group-text">
+                        <i class="bi bi-eye" id="togglePassword" style="cursor: pointer;" onclick="togglePassword()"></i>
+                    </span>
+                </div>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-login btn-lg">Login</button>
+            </div>
+            <div class="text-end mt-2">
+                <a href="forgotPassword.php" class="text-decoration-none text-primary">Forgot password?</a>
             </div>
         </form>
         <div class="link mt-3">      
@@ -48,5 +56,21 @@ session_start();
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const toggleIcon = document.getElementById("togglePassword");
+
+            if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("bi-eye");
+            toggleIcon.classList.add("bi-eye-slash");
+            } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("bi-eye-slash");
+            toggleIcon.classList.add("bi-eye");
+            }
+        }
+    </script>
 </body>
 </html>

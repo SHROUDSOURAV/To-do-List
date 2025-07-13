@@ -36,16 +36,27 @@ session_start();
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3 position-relative">
                 <label for="password" class="form-label"><i class="bi bi-lock-fill me-2"></i>Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                    <span class="input-group-text">
+                    <i class="bi bi-eye" id="togglePassword" onclick="togglePasswordVisibility('password', 'togglePassword')" style="cursor:pointer;"></i>
+                    </span>
+                </div>
+                <div id="password-strength" class="mt-1"></div>
             </div>
 
-            <div class="mb-3">
+
+            <div class="mb-3 position-relative">
                 <label for="cpassword" class="form-label"><i class="bi bi-shield-lock-fill me-2"></i>Confirm Password</label>
-                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm password" required>
+                    <span class="input-group-text">
+                    <i class="bi bi-eye" id="toggleCPassword" onclick="togglePasswordVisibility('cpassword', 'toggleCPassword')" style="cursor:pointer;"></i>
+                    </span>
+                </div>
             </div>
-
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-box-arrow-in-right me-2"></i>Register</button>
             </div>
@@ -62,5 +73,66 @@ session_start();
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function checkPasswordStrength(password) {
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+            return strength;
+        }
+
+        function updateStrengthMeter() {
+            const password = document.getElementById("password").value;
+            const meter = document.getElementById("password-strength");
+            const strength = checkPasswordStrength(password);
+
+            if (!password) {
+            meter.textContent = "";
+            meter.className = "";
+            } else if (strength <= 1) {
+            meter.textContent = "Weak";
+            meter.className = "text-danger fw-bold";
+            } else if (strength === 2 || strength === 3) {
+            meter.textContent = "Medium";
+            meter.className = "text-warning fw-bold";
+            } else {
+            meter.textContent = "Strong";
+            meter.className = "text-success fw-bold";
+            }
+        }
+
+        function togglePasswordVisibility(id, toggleId) {
+            const input = document.getElementById(id);
+            const toggle = document.getElementById(toggleId);
+
+            if (input.type === "password") {
+            input.type = "text";
+            toggle.classList.remove("bi-eye");
+            toggle.classList.add("bi-eye-slash");
+            } else {
+            input.type = "password";
+            toggle.classList.remove("bi-eye-slash");
+            toggle.classList.add("bi-eye");
+            }
+        }
+
+        // Prevent form submission if password is weak
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const password = document.getElementById("password").value;
+            const strength = checkPasswordStrength(password);
+
+            if (strength <= 1) {
+            e.preventDefault();
+            alert("Password is too weak. Please choose a stronger password.");
+            }
+        });
+
+        // Add keyup listener
+        document.getElementById("password").addEventListener("keyup", updateStrengthMeter);
+    </script>
 </body>
 </html>
