@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($newPass !== $confirmPass) {
         $error = "❌ Passwords do not match.";
-    } elseif (strlen($newPass) < 8) {
-        $error = "❌ Password must be at least 8 characters.";
+    } elseif (strlen($newPass) < 6) {
+        $error = "❌ Password must be at least 6 characters.";
     } else {
         // ❗ Storing password directly (insecure for production)
         $update = mysqli_prepare($connect, "UPDATE users SET password = ?, reset_token = NULL, token_expiry = NULL WHERE email = ?");

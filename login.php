@@ -51,7 +51,9 @@ session_start();
             <div class="d-grid">
                 <button type="submit" class="btn btn-login btn-lg">Login</button>
             </div>
-            
+            <div class="text-end mt-2">
+                <a href="forgotPassword.php" class="text-decoration-none text-primary">Forgot password?</a>
+            </div>
         </form>
         <div class="link mt-3">      
             <p>Don't have an account? <a href="register.php">Register here</a></p>
