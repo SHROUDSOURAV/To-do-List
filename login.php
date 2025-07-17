@@ -1,5 +1,9 @@
 <!-- login page to take username and password -->
 <!-- backend working of this credentials done in loginProcess.php-->
+<?php if (isset($_SESSION['msg'])): ?>
+    <div class="alert alert-success text-center"><?= $_SESSION['msg']; unset($_SESSION['msg']); ?></div>
+<?php endif; ?>
+
 <?php
 session_start();
 ?>
@@ -8,7 +12,7 @@ session_start();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Page</title>
+  <title>Login Page TO-DO</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link href="./styles/loginStyle.css" rel="stylesheet">
